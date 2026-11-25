@@ -5,7 +5,7 @@ baseurl: /Immune-System
 lang: ko_KR
 timezone: Asia/Seoul
 permalink: /:year/:month/:day/:title/
-naver_verification: ""
+naver_verification: "28074f9e967d8ffccdef9f5c5ed322fa55ed209f"
 google_verification: ""
 plugins:
   - jekyll-seo-tag
