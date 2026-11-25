@@ -4,12 +4,17 @@ on:
     branches: [main]
   workflow_dispatch:
 permissions:
-  contents: read
+  contents: write
+concurrency:
+  group: wordpress-visual-audit
+  cancel-in-progress: true
 jobs:
   compare:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
       - uses: actions/setup-python@v5
         with:
           python-version: '3.12'
@@ -34,6 +39,17 @@ jobs:
           node tests/visual_compare.cjs
           python -m pip install Pillow
           python tests/make_comparison.py
+      - name: Save initial side-by-side screenshots
+        run: |
+          if [ ! -f compare/.baseline ]; then
+            touch compare/.baseline
+            git config user.name 'github-actions[bot]'
+            git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+            git add compare/*side-by-side* compare/.baseline
+            git commit -m 'docs: save WordPress visual comparisons'
+            git pull --rebase origin main
+            git push
+          fi
       - uses: actions/upload-artifact@v4
         if: always()
         with:
