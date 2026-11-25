@@ -1,0 +1,15 @@
+title: 면역뉴스
+description: 면역부터 생활 건강, 병원과 보험까지 한눈에 읽는 건강 뉴스
+url: https://proimmunesystem.github.io
+baseurl: /Immune-System
+lang: ko_KR
+timezone: Asia/Seoul
+permalink: /:year/:month/:day/:title/
+naver_verification: ""
+google_verification: ""
+plugins:
+  - jekyll-seo-tag
+  - jekyll-sitemap
+  - jekyll-feed
+include: [".well-known"]
+exclude: ["_source", "compare", "scripts", "tests", "README.md", "Gemfile", "Gemfile.lock", "vendor", "content", "site", "글_추가_계획.md", "legacy"]

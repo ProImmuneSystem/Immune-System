@@ -1,0 +1,4 @@
+---
+layout: default
+---
+<header class="listing-heading"><span>IMMUNITY NEWS</span><h1>{{ page.title }}</h1><p>면역부터 생활 건강까지, 발행된 기사를 만나보세요.</p></header><div class="card-grid three">{% assign offset = page.page_number | minus: 1 | times: 12 %}{% for post in site.posts limit:12 offset:offset %}{% include post-card.html post=post %}{% endfor %}</div><nav class="pagination" aria-label="기사 목록 페이지">{% assign pages = site.posts.size | plus: 11 | divided_by: 12 %}{% for n in (1..pages) %}{% if n == 1 %}{% assign page_url = '/' | append: page.listing_name | append: '/' %}{% else %}{% assign page_url = '/' | append: page.listing_name | append: '/page/' | append: n | append: '/' %}{% endif %}<a href="{{ page_url | relative_url }}" {% if n == page.page_number %}aria-current="page"{% endif %}>{{ n }}</a>{% endfor %}</nav>

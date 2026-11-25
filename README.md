@@ -1,43 +1,30 @@
-# 면역과 암 이야기 — GitHub Pages 설치 안내
+# 면역뉴스 · WordPress → GitHub Pages
 
-면역·음식·암·병원과 보험 정보를 다루는 정적 사이트입니다. 워드프레스가 아니라 GitHub Pages용 파일입니다. 초기 글 3편, 예약 글 1편이 포함되어 있습니다. 글 본문은 공백을 제외하고 각 2,000자 이상입니다. 빈 카테고리는 글이 추가되면 채워집니다.
+워드프레스닷컴은 작성·편집 원본이고, 이 저장소는 검색 공개용 복제 사이트입니다. WordPress 앱에서 글을 발행·수정·공개 해제하면 동기화 작업이 글과 이미지를 가져와 GitHub Pages를 갱신합니다. 본문은 원본 출력 HTML을 사용합니다.
 
-## 처음 올리는 방법
+- 현재 저장소 주소: `https://proimmunesystem.github.io/Immune-System/`
+- GitHub Actions의 **Sync WordPress and deploy → Run workflow**로 즉시 실행할 수 있습니다. 매시 17분에도 실행되지만 GitHub 예약 실행은 지연되거나 누락될 수 있으므로 1시간 이내 반영을 보장하지 않습니다.
+- 글 수정 시간과 본문, 카테고리를 확인하고, 원본의 전체 목록을 정상적으로 받지 못하면 삭제 동작 없이 종료합니다. 공개 해제된 글은 다음 성공한 동기화에서 삭제합니다.
+- 이미지 파일은 `assets/images/`에 URL 해시로 저장하고 재다운로드를 피합니다. WordPress의 이미지 이용 권한과 출처를 유지해야 합니다.
+- 홈의 고정 주요 기사는 `_data/home.yml`, 메뉴는 `_data/navigation.yml`을 편집합니다. 기사 슬러그를 지정하고 파일을 커밋하면 됩니다.
+- 기존 독립형 예약 발행기는 더 이상 배포하지 않습니다. 관련 파일과 기존 원고는 저장소에 남아 있고 이전 워크플로는 Git 기록에서 볼 수 있습니다.
 
-1. GitHub에서 새 저장소를 만듭니다. GitHub Free 개인 계정에서 GitHub Pages를 쓰려면 보통 공개 저장소로 만들어야 합니다.
-2. ZIP 압축을 푼 뒤 **폴더 자체가 아니라 폴더 안의 파일 전체**를 저장소의 최상위에 업로드합니다. `.github` 폴더도 포함해야 합니다. 윈도우에서 보이지 않으면 탐색기에서 숨긴 항목을 켜세요. `README.md`, `assets`, `content`, `scripts`, `.github`가 저장소 첫 화면에 함께 보여야 합니다.
-3. 저장소의 **Settings → Pages → Build and deployment → Source**에서 **GitHub Actions**를 선택합니다.
-4. 저장소의 **Settings → Actions → General → Workflow permissions**에서 **Read and write permissions**를 선택하고 저장합니다. 이 권한은 예약 글 발행 상태를 저장소에 기록하는 데 필요합니다. 권한 메뉴가 없다면 계정·조직 정책을 확인하세요.
-5. **Actions → Publish site and scheduled articles → Run workflow**를 선택합니다. 녹색 완료 표시가 뜨면 Pages 설정 화면의 주소로 접속합니다. 처음에는 사이트 등록과 주소 반영에 시간이 걸릴 수 있습니다.
+## 설정
 
-## 자동 발행
+저장소 Settings → Pages → Build and deployment → Source에서 **GitHub Actions**를 선택합니다. Settings → Actions → General → Workflow permissions에서 읽기·쓰기 권한이 필요한지 확인합니다. 워크플로는 contents 쓰기와 Pages 배포 권한을 요청합니다. 공개 저장소의 워크플로는 공개 정보만 다루며 별도 인증 토큰을 요구하지 않습니다.
 
-- 매일 한국 시간 오전 **10시 17분**에 예약 글을 한 편씩 공개합니다. 첫 수동 실행은 글을 발행하지 않고 현재 상태만 배포합니다.
-- 예약 글이 1편뿐이므로 첫 예약 실행 후 대기열은 비어 있습니다. 새 원고를 추가하면 다음 실행부터 순서대로 공개됩니다.
-- GitHub 예약 실행은 지연될 수 있고, 공개 저장소에 60일간 활동이 없으면 GitHub가 예약 작업을 비활성화할 수 있습니다. Actions 탭에서 상태를 확인하세요.
-- 예약 원고는 웹사이트에는 숨겨지지만 **공개 GitHub 저장소의 `content/articles.json` 파일에는 보입니다.** 비공개로 보관해야 하는 원고는 공개 저장소에 넣지 마세요.
-- `content/state.json`의 `released_count`는 이미 예약 발행한 글의 개수입니다. 기존 예약 글의 순서를 바꾸거나 삭제하면 공개 범위가 달라질 수 있으므로 기존 순서를 유지한 채 맨 뒤에 새 예약 글을 추가하세요.
-- 예약 실행은 저장소에 상태를 커밋한 뒤 배포합니다. 배포가 실패하더라도 글이 누락되지 않도록 공개 상태가 남습니다. Actions에서 해당 작업을 재실행하거나 수동 실행하면 현재 공개 상태가 다시 배포됩니다. 자동 예약 실행을 여러 개 동시에 재실행하지 마세요.
+사이트 설정은 `_config.yml`에서 관리합니다. 현재 `url`은 `https://proimmunesystem.github.io`, `baseurl`은 `/Immune-System`입니다. 도메인을 나중에 연결하면 `url`을 해당 `https://도메인`으로 바꾸고 `baseurl`은 빈 문자열로 바꿉니다. Jekyll의 SEO 태그와 사이트맵은 복제 사이트의 주소를 canonical로 사용합니다.
 
-## 글 추가와 수정
+### 네이버·구글 등록
 
-`content/articles.json`을 열면 각 글이 객체 하나로 저장되어 있습니다. 다음 항목을 참고해 작성합니다.
+1. 네이버 서치어드바이저에서 위 공개 사이트 주소를 등록합니다.
+2. 발급받은 인증 HTML 파일을 저장소 루트에 추가하거나 `_config.yml`의 `naver_verification`에 메타태그의 값만 넣고 커밋합니다. 구글은 `google_verification`에 값을 넣습니다.
+3. 배포가 끝나면 `/Immune-System/sitemap.xml`을 제출합니다. `robots.txt`, `/feed.xml`도 자동 제공됩니다. 인증과 색인은 검색엔진 측에서 별도로 진행되며 색인을 보장하지 않습니다.
 
-- `id`: 영문·숫자·하이픈으로 된 중복 없는 주소
-- `category`: 메뉴에 있는 분류명과 동일하게 입력
-- `title`, `summary`: 제목과 소개
-- `published`: `true`는 바로 공개, `false`는 예약 대기
-- `sources`: `[["자료 이름", "https://주소"]]` 형식
-- `sections`: `[["소제목", "본문 문단"]]` 형식
+### 나중에 도메인 연결
 
-예약 글은 기존 예약 글의 **맨 뒤에** 추가하세요. 날짜별 발행을 바꾸려면 `.github/workflows/publish.yml`의 `cron`을 수정합니다. GitHub 예약 시간은 UTC 기준입니다. 대한민국 시간은 UTC보다 9시간 빠릅니다.
+소유 도메인을 GitHub Pages 설정에 등록하고, 도메인 DNS의 A 레코드를 `185.199.108.153`, `185.199.109.153`, `185.199.110.153`, `185.199.111.153`으로 지정합니다. `www`를 사용하면 GitHub 공식 안내에 따라 CNAME도 지정합니다. 검증·전파 후 Settings → Pages에서 Enforce HTTPS를 켭니다. `CNAME` 파일은 도메인을 실제로 연결할 때 추가합니다. `_config.yml`의 `url`과 `baseurl`도 함께 변경합니다.
 
-글과 보험 제도, 병원 정보는 시간이 지날 수 있으므로 실제 공개 전에 자료 링크와 최신 기준을 점검하세요. 카테고리나 의료 정보가 자동으로 검증되는 시스템은 아닙니다.
+## 로컬 점검
 
-## 내 컴퓨터에서 확인
-
-Python 3가 설치돼 있으면 `python scripts/build.py`를 실행합니다. `site/index.html`과 `site/posts`에 공개용 파일이 생성됩니다. `python -m http.server 8000 --directory site` 실행 후 브라우저에서 `http://localhost:8000`으로 열 수 있습니다. `site`는 빌드 결과라 수정 대상이 아닙니다.
-
-## 주소와 검색
-
-GitHub Actions는 저장소 이름을 이용해 사이트맵과 robots.txt 주소를 생성합니다. 직접 도메인을 연결한 경우 `SITE_URL` 환경변수에 사이트의 전체 주소를 지정하고 다시 빌드해야 합니다. 검색 색인과 AI 답변 노출은 보장되지 않으며, 사이트가 공개되어 있어야 검색엔진이 접근할 수 있습니다. 공개 후 Google Search Console 또는 네이버 서치어드바이저에서 소유 확인과 사이트맵 제출을 진행할 수 있습니다.
+Ruby 3.3과 Bundler에서 `bundle install` 후 `bundle exec jekyll serve`를 실행합니다. WordPress 네트워크가 가능하다면 `python scripts/sync_wp.py`를 실행할 수 있습니다. 이미지 다운로드나 페이지 목록 조회가 실패하면 작업이 오류로 끝나므로, 실패 상태에서 변경을 커밋하지 마세요. 원본 HTML 수집은 `scripts/capture_source.sh`로 실행할 수 있으며 `_source`는 배포하지 않습니다.

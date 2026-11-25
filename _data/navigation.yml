@@ -1,0 +1,18 @@
+- name: 전체 기사
+  url: /all-news/
+- name: 최신 기사
+  url: /latest-news/
+- name: 면역 지식
+  url: /immune-guide/
+- name: 면역세포
+  url: /category/immune-cells/
+- name: 음식과 영양
+  url: /category/food-nutrition/
+- name: 암의 이해
+  url: /cancer-guide/
+- name: 생활 건강
+  url: /category/everyday-health/
+- name: 병원과 보험
+  url: /hospitals/
+- name: 연구와 논문
+  url: /category/research/

@@ -1,0 +1,40 @@
+name: Visual and link audit
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+permissions:
+  contents: read
+jobs:
+  compare:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+      - run: python scripts/sync_wp.py
+      - uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: '3.3'
+          bundler-cache: true
+      - run: bundle exec jekyll build
+      - name: Check local links
+        run: python tests/check_links.py _site
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - run: npm install --no-save playwright
+      - run: npx playwright install --with-deps chromium
+      - name: Capture desktop and mobile comparison
+        run: |
+          mkdir -p /tmp/immune-site
+          ln -s "$GITHUB_WORKSPACE/_site" /tmp/immune-site/Immune-System
+          python -m http.server 8765 --directory /tmp/immune-site >/tmp/http.log 2>&1 &
+          node tests/visual_compare.cjs
+      - uses: actions/upload-artifact@v4
+        if: always()
+        with:
+          name: wordpress-visual-comparison
+          path: compare/
+          if-no-files-found: warn

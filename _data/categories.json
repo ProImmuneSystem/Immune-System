@@ -1,0 +1,58 @@
+[
+  {
+    "slug": "everyday-health",
+    "name": "생활 건강"
+  },
+  {
+    "slug": "food-nutrition",
+    "name": "음식과 영양"
+  },
+  {
+    "slug": "global-health",
+    "name": "해외 건강 자료"
+  },
+  {
+    "slug": "hospital-insurance",
+    "name": "병원과 보험"
+  },
+  {
+    "slug": "immune-cells",
+    "name": "면역세포"
+  },
+  {
+    "slug": "research",
+    "name": "연구와 논문"
+  },
+  {
+    "slug": "understanding-cancer",
+    "name": "암의 이해"
+  },
+  {
+    "slug": "면역세포",
+    "name": "면역세포"
+  },
+  {
+    "slug": "병원과-보험",
+    "name": "병원과 보험"
+  },
+  {
+    "slug": "생활과-여성-건강",
+    "name": "생활 건강"
+  },
+  {
+    "slug": "암의-이해",
+    "name": "암의 이해"
+  },
+  {
+    "slug": "연구와-논문",
+    "name": "연구와 논문"
+  },
+  {
+    "slug": "음식과-영양",
+    "name": "음식과 영양"
+  },
+  {
+    "slug": "해외-건강-자료",
+    "name": "해외 건강 자료"
+  }
+]
