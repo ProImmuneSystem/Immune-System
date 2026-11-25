@@ -2,7 +2,7 @@ name: Sync WordPress and deploy
 on:
   push:
     branches: [main]
-    paths: ['.github/workflows/sync.yml']
+    paths: ['.github/workflows/sync.yml', '_data/home-media.json']
   schedule:
     - cron: '17 * * * *'
   workflow_dispatch:
@@ -27,7 +27,7 @@ jobs:
         run: python scripts/sync_wp.py
       - name: Commit only changed mirror files
         run: |
-          git add _posts _data/sync_state.json _data/categories.json assets/images category all-news latest-news
+          git add _posts _data/sync_state.json _data/categories.json _data/home_images.json assets/images category all-news latest-news
           if ! git diff --cached --quiet; then
             git config user.name 'github-actions[bot]'
             git config user.email '41898282+github-actions[bot]@users.noreply.github.com'

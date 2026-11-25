@@ -11,6 +11,8 @@ const paths = ['/', '/category/immune-cells/', '/2026/11/24/nk-cells/', '/2026/1
         const page = await browser.newPage({viewport:{width,height:900}, deviceScaleFactor:1});
         const response = await page.goto(base+path,{waitUntil:'domcontentloaded',timeout:60000});
         if (!response || response.status()>=400) throw Error(`${base+path} returned ${response && response.status()}`);
+        await page.evaluate(() => { for (const img of document.images) img.loading = 'eager'; });
+        await page.waitForTimeout(1200);
         await page.addStyleTag({content:'#marketingbar,.marketing-bar,#actionbar {display:none!important}'});
         await page.screenshot({path:`compare/${i}-${name}-${width}.png`,fullPage:true});
         await page.close();
