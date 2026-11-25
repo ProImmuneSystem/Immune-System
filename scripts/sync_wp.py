@@ -105,8 +105,8 @@ def render_post(post,offline):
     content=content.replace('__IMMUNE_BASEURL__','{% endraw %}{{ site.baseurl }}{% raw %}')
     return front+content+'\n',categories
 
-def sync(posts,offline):
-    if not posts: raise ValueError('Empty post list; refusing to delete local posts')
+def sync(posts,offline,allow_empty=False):
+    if not posts and not allow_empty: raise ValueError('Empty post list; refusing to delete local posts')
     if (ROOT/'_data/home-media.json').exists():
         sources=json.loads((ROOT/'_data/home-media.json').read_text(encoding='utf-8'))
         home_images={name:image_path(url,offline) for name,url in sources.items()}
@@ -141,7 +141,7 @@ def sync(posts,offline):
                 if index.parent.name.isdigit() and int(index.parent.name)>count: index.unlink();dirty+=1
     # Pagination pages are generated from the verified full count.
     for name in ('all-news','latest-news'):
-        for n in range(1,(len(posts)+11)//12+1):
+        for n in range(1,max(1,(len(posts)+11)//12)+1):
             suffix='' if n==1 else 'page/'+str(n)+'/'
             data={'layout':'listing','title':'전체 기사' if name=='all-news' else '최신 기사','page_number':n,'listing_name':name,'permalink':'/'+name+'/'+suffix}
             raw='---\n'+'\n'.join(k+': '+json.dumps(v,ensure_ascii=False) for k,v in data.items())+'\n---\n'
@@ -149,12 +149,12 @@ def sync(posts,offline):
         page_dir=ROOT/name/'page'
         if page_dir.exists():
             for index in page_dir.glob('*/index.html'):
-                if index.parent.name.isdigit() and int(index.parent.name)>(len(posts)+11)//12: index.unlink();dirty+=1
+                if index.parent.name.isdigit() and int(index.parent.name)>max(1,(len(posts)+11)//12): index.unlink();dirty+=1
     print(f'posts={len(posts)} categories={len(categories)} changed_files={dirty} images={len(list((ROOT/"assets/images").glob("*")))}')
 
 def main():
     parser=argparse.ArgumentParser();parser.add_argument('--snapshot');parser.add_argument('--offline',action='store_true');args=parser.parse_args()
-    try: sync(snapshot_posts(args.snapshot) if args.snapshot else get_posts(),args.offline)
+    try: sync(snapshot_posts(args.snapshot) if args.snapshot else get_posts(),args.offline,allow_empty=not bool(args.snapshot))
     except Exception as exc: print('Sync aborted:',exc,file=sys.stderr);return 1
     return 0
 if __name__=='__main__': raise SystemExit(main())

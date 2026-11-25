@@ -18,6 +18,7 @@ class SyncTests(unittest.TestCase):
   m.sync(self.posts,True)
   with self.assertRaises(ValueError):m.sync([],True)
   self.assertTrue((self.root/'_posts'/'2026-11-25-test.html').exists())
+  m.sync([],True,allow_empty=True);self.assertFalse((self.root/'_posts'/'2026-11-25-test.html').exists())
   second=dict(self.posts[0],ID=4,slug='next',URL='https://proimmunesystem.wordpress.com/2026/11/25/next/')
   m.sync([second],True);self.assertFalse((self.root/'_posts'/'2026-11-25-test.html').exists())
  def test_bad_pagination_never_returns_posts(self):
