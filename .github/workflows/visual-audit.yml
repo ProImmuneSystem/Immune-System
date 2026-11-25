@@ -32,6 +32,8 @@ jobs:
           ln -s "$GITHUB_WORKSPACE/_site" /tmp/immune-site/Immune-System
           python -m http.server 8765 --directory /tmp/immune-site >/tmp/http.log 2>&1 &
           node tests/visual_compare.cjs
+          python -m pip install Pillow
+          python tests/make_comparison.py
       - uses: actions/upload-artifact@v4
         if: always()
         with:

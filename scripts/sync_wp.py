@@ -107,6 +107,10 @@ def render_post(post,offline):
 
 def sync(posts,offline):
     if not posts: raise ValueError('Empty post list; refusing to delete local posts')
+    if (ROOT/'_data/home-media.json').exists():
+        sources=json.loads((ROOT/'_data/home-media.json').read_text(encoding='utf-8'))
+        home_images={name:image_path(url,offline) for name,url in sources.items()}
+        write_if_changed(ROOT/'_data/home_images.json',json.dumps(home_images,ensure_ascii=False,sort_keys=True,indent=2)+'\n')
     previous=json.loads(STATE.read_text(encoding='utf-8')) if STATE.exists() else {}
     wanted={}; categories={}; dirty=0
     for post in sorted(posts,key=lambda p:p['ID']):
@@ -123,8 +127,18 @@ def sync(posts,offline):
     dirty+=write_if_changed(STATE,json.dumps(state,ensure_ascii=False,sort_keys=True,indent=2)+'\n')
     dirty+=write_if_changed(ROOT/'_data/categories.json',json.dumps([{'slug':s,'name':n} for s,n in sorted(categories.items())],ensure_ascii=False,indent=2)+'\n')
     for slug,name in categories.items():
-        target=ROOT/'category'/slug/'index.html'
-        dirty+=write_if_changed(target,'---\nlayout: category\ntitle: '+json.dumps(name,ensure_ascii=False)+'\ncategory_slug: '+json.dumps(slug,ensure_ascii=False)+'\npermalink: /category/'+slug+'/\n---\n')
+        canonical=ALIASES.get(name,slug)
+        total=sum(1 for post,_ in wanted.values() if any(c['slug']==canonical for c in render_post(post,offline)[1]))
+        count=max(1,(total+9)//10)
+        for n in range(1,count+1):
+            suffix='' if n==1 else 'page/'+str(n)+'/'
+            data={'layout':'category','title':name,'category_slug':canonical,'archive_slug':slug,'page_number':n,'category_pages':count,'permalink':'/category/'+slug+'/'+suffix}
+            raw='---\n'+'\n'.join(k+': '+json.dumps(v,ensure_ascii=False) for k,v in data.items())+'\n---\n'
+            dirty+=write_if_changed(ROOT/'category'/slug/suffix/'index.html',raw)
+        page_dir=ROOT/'category'/slug/'page'
+        if page_dir.exists():
+            for index in page_dir.glob('*/index.html'):
+                if index.parent.name.isdigit() and int(index.parent.name)>count: index.unlink();dirty+=1
     # Pagination pages are generated from the verified full count.
     for name in ('all-news','latest-news'):
         for n in range(1,(len(posts)+11)//12+1):
