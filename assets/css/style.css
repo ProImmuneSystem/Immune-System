@@ -9,15 +9,5 @@
 .search-form input{width:0;min-width:0;flex:1;padding:0 12px;font-size:14px;line-height:40px;border:1px solid #c8d1d4;border-right:0;border-radius:3px 0 0 3px}
 .search-form button{padding:0 18px;font-size:14px;font-weight:700;border-radius:0 3px 3px 0}
 .search-form input:focus-visible,.search-form button:focus-visible{outline:2px solid #0f6b79;outline-offset:2px}
-/* The guide cards alone form a continuous, user-controllable rail. */
-.guide-toolbar{display:flex;justify-content:flex-end;gap:8px;margin:-4px 0 12px}
-.guide-toolbar button{font:inherit;font-size:13px;line-height:1.2;color:#40545c;background:#fff;border:1px solid #d6dfe2;border-radius:3px;padding:7px 10px;cursor:pointer}
-.guide-toolbar button:hover{border-color:#0f6b79;color:#0f6b79}
-.guide-toolbar button:focus-visible{outline:2px solid #0f6b79;outline-offset:2px}
-.guide-viewport{overflow-x:auto;scrollbar-width:thin}
-.guide-carousel.is-ready .guide-viewport{overflow:hidden}
-.guide-track{display:flex;gap:28px;transition:transform .55s ease;will-change:transform}
-.guide-track .post-card{flex:0 0 calc((100% - 56px) / 3);min-width:0}
-@media(max-width:781px){.search-form{width:100%;max-width:420px}.guide-track{gap:18px}.guide-track .post-card{flex-basis:calc((100% - 18px) / 2)}}
-@media(max-width:480px){.guide-track .post-card{flex-basis:100%}}
-@media(prefers-reduced-motion:reduce){.guide-track{transition:none}}
+
+@media(max-width:781px){.search-form{width:100%;max-width:420px}}
