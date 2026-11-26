@@ -1,0 +1,1 @@
+(()=>{const form=document.querySelector('.hospital-finder-form');if(!form)return;form.addEventListener('submit',event=>{const selection=form.querySelector('[name="region"]');if(!selection||!selection.value)return;event.preventDefault();const target=new URL(form.action,location.href);target.hash=encodeURIComponent(selection.value);location.assign(target.href);});})();

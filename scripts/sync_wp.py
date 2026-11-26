@@ -8,7 +8,7 @@ ROOT = Path(__file__).resolve().parents[1]
 API = 'https://public-api.wordpress.com/rest/v1.1/sites/proimmunesystem.wordpress.com/posts/'
 SITE = 'proimmunesystem.wordpress.com'
 STATE = ROOT / '_data/sync_state.json'
-ALIASES = {'면역세포':'immune-cells','음식과 영양':'food-nutrition','암의 이해':'understanding-cancer','생활과 여성 건강':'everyday-health','생활 건강':'everyday-health','병원과 보험':'hospital-insurance','연구와 논문':'research','해외 건강 자료':'global-health'}
+ALIASES = {'면역세포':'immune-cells','음식과 영양':'food-nutrition','영양제':'supplements','암의 이해':'understanding-cancer','생활과 여성 건강':'everyday-health','생활 건강':'everyday-health','병원과 보험':'hospital-insurance','연구와 논문':'research','해외 건강 자료':'global-health'}
 STRIP = re.compile(r'<(?:script|iframe)\b[^>]*>.*?</(?:script|iframe)\s*>', re.I|re.S)
 IMG = re.compile(r'https?://(?:proimmunesystem\.wordpress\.com|proimmunesystem\.files\.wordpress\.com|i[0-2]\.wp\.com)/[^\s\"\'<>),]+', re.I)
 
