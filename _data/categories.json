@@ -24,6 +24,10 @@
     "name": "연구와 논문"
   },
   {
+    "slug": "supplements",
+    "name": "영양제"
+  },
+  {
     "slug": "understanding-cancer",
     "name": "암의 이해"
   },
@@ -46,6 +50,10 @@
   {
     "slug": "연구와-논문",
     "name": "연구와 논문"
+  },
+  {
+    "slug": "영양제",
+    "name": "영양제"
   },
   {
     "slug": "음식과-영양",
