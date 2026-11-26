@@ -20,6 +20,8 @@ jobs:
           ref: main
       - name: Prepare current WordPress content and image assets
         run: python3 scripts/sync_wp.py
+      - name: Refresh search trends and health news
+        run: python3 scripts/fetch_side_news.py
       - uses: ruby/setup-ruby@v1
         with:
           ruby-version: '3.3'

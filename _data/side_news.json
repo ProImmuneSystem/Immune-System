@@ -1,0 +1,44 @@
+{
+  "trends": {
+    "updated": "11.26 15:05",
+    "items": [
+      {
+        "title": "kbo 시상식",
+        "url": "https://trends.google.com/trends/explore?geo=KR&q=kbo%20%EC%8B%9C%EC%83%81%EC%8B%9D"
+      },
+      {
+        "title": "부산일보",
+        "url": "https://trends.google.com/trends/explore?geo=KR&q=%EB%B6%80%EC%82%B0%EC%9D%BC%EB%B3%B4"
+      },
+      {
+        "title": "신동엽",
+        "url": "https://trends.google.com/trends/explore?geo=KR&q=%EC%8B%A0%EB%8F%99%EC%97%BD"
+      },
+      {
+        "title": "발전",
+        "url": "https://trends.google.com/trends/explore?geo=KR&q=%EB%B0%9C%EC%A0%84"
+      }
+    ]
+  },
+  "health": {
+    "updated": "11.26 15:05",
+    "items": [
+      {
+        "title": "2025년 바이오산업 생산 26조8천억원…전년 대비 14.2%↑",
+        "url": "https://www.yna.co.kr/view/AKR20261126128400017"
+      },
+      {
+        "title": "[게시판] 질병청, 아토피·천식 예방관리 발전 방안 논의",
+        "url": "https://www.yna.co.kr/view/AKR20261126126400530"
+      },
+      {
+        "title": "\"심장근육 두꺼워지는 심근증, 유전자 따라 심혈관 위험 달라져\"",
+        "url": "https://www.yna.co.kr/view/AKR20261126119500530"
+      },
+      {
+        "title": "전남광주512호 새 병원선 출항…\"병원이 집앞까지\" 섬 주민 활짝",
+        "url": "https://www.yna.co.kr/view/AKR20261126117700054"
+      }
+    ]
+  }
+}
